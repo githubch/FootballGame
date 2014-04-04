@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -6,19 +7,21 @@ import static org.junit.Assert.assertEquals;
  * Created by twer on 3/28/14.
  */
 public class TeamTest {
+    Team team;
+    @Before
+    public void setUp() throws Exception {
+        team = new Team("A");
+    }
+
     @org.junit.Test
     public void shouldBeCrazyWhenGetScore() throws Exception {
-        Team team = new Team("A");
         team.getScore();
-        String blommmmy = team.announce(new Reporter());
-        assertEquals("TeamA:Wow!", blommmmy);
+        assertEquals("TeamA:Wow!", team.announce(new Reporter()));
     }
 
     @Test
     public void shouldBeAhhhhWhenLoseScore() throws Exception {
-        Team team = new Team("A");
         team.loseScore();
-        String Ahhhh = team.announce(new Reporter());
-        assertEquals("TeamA:Ahh!", Ahhhh);
+        assertEquals("TeamA:Ahh!", team.announce(new Reporter()));
     }
 }

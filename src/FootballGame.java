@@ -12,7 +12,7 @@ public class FootballGame {
         this.teamB = teamB;
     }
 
-    public String announce(IAnounceObserver reporter) {
+    public String announce(IAnnounceObserver reporter) {
         String output = "";
         if(teamA != null)
         {

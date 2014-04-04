@@ -1,7 +1,7 @@
 /**
  * Created by twer on 3/28/14.
  */
-public class Reporter implements IAnounceObserver {
+public class Reporter implements IAnnounceObserver {
     public String announceGetScore(Team team) {
         return "Team" + team.getName() + ":Wow!";
     }

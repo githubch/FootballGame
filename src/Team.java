@@ -18,10 +18,8 @@ public class Team {
         moreScore = false;
     }
 
-    public String announce(IAnounceObserver reporter) {
-        if(moreScore == true)
-            return reporter.announceGetScore(this);
-        return reporter.announceLoseScore(this);
+    public String announce(IAnnounceObserver reporter) {
+        return moreScore == true ?reporter.announceGetScore(this):reporter.announceLoseScore(this);
     }
 
     public String getName() {
