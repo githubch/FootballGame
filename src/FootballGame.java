@@ -2,7 +2,7 @@
  * Created by twer on 3/28/14.
  */
 public class FootballGame {
-    private Team[] teams;
+    public static final String EMPTY_OUTPUT = "";
     private Team teamA;
     private Team teamB;
 
@@ -13,14 +13,15 @@ public class FootballGame {
     }
 
     public String announce(IAnnounceObserver reporter) {
-        String output = "";
-        if(teamA != null)
+        String output = getAnnouncement(reporter, EMPTY_OUTPUT, teamA);
+        output = getAnnouncement(reporter, output, teamB);
+        return output;
+    }
+
+    private String getAnnouncement(IAnnounceObserver reporter, String output, Team team) {
+        if(team != null)
         {
-            output += teamA.announce(reporter);
-        }
-        if(teamB != null)
-        {
-            output += "," + teamB.announce(reporter);
+            output += team.announce(reporter);
         }
         return output;
     }

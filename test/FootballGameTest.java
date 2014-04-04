@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -6,50 +7,57 @@ import static org.junit.Assert.assertEquals;
  * Created by twer on 3/28/14.
  */
 public class FootballGameTest {
+
+    private Reporter reporter;
+    private ScoreBoard scoreBoarder;
+    private Team teamA;
+
+    @Before
+    public void setUp() throws Exception {
+        teamA = new Team("A");
+        reporter = new Reporter();
+        scoreBoarder = new ScoreBoard();
+    }
+
     @Test
-    public void shouldReportrSpeakWowWhenTeamGetScore() throws Exception {
-        Team team = new Team("A");
-        FootballGame footballGame = new FootballGame(team, null);
-        team.getScore();
-        String output = footballGame.announce(new Reporter());
-        assertEquals("TeamA:Wow!", output);
+    public void shouldReporterSpeakWowWhenTeamGetScore() throws Exception {
+        teamA.getScore();
+        String announce = footBallGameAnnounce(teamA, null, reporter);
+        assertEquals("TeamA:Wow!", announce);
     }
 
     @Test
     public void shouldReporterSpeakAhhWhenTeamLoseScore() throws Exception {
-        Team team = new Team("A");
-        FootballGame footballGame = new FootballGame(team, null);
-        team.loseScore();
-        String output = footballGame.announce(new Reporter());
-        assertEquals("TeamA:Ahh!", output);
+        teamA.loseScore();
+        String announce = footBallGameAnnounce(teamA, null, reporter);
+        assertEquals("TeamA:Ahh!", announce);
     }
 
     @Test
     public void shouldScoreBoardSpeakIncreaseWhenTeamGetScore()
     {
-        Team team = new Team("A");
-        FootballGame footballGame = new FootballGame(team, null);
-        team.getScore();
-        String output = footballGame.announce(new ScoreBoard());
-        assertEquals("TeamA:Increase++", output);
+        teamA.getScore();
+        String announce = footBallGameAnnounce(teamA, null, scoreBoarder);
+        assertEquals("TeamA:Increase++", announce);
     }
 
     @Test
     public void shouldScoreBoardSpeakKeepWhenTeamLoseScore() throws Exception {
-        Team team = new Team("A");
-        FootballGame footballGame = new FootballGame(team, null);
-        team.loseScore();
-        String output = footballGame.announce(new ScoreBoard());
-        assertEquals("TeamA:Keep!!", output);
+        teamA.loseScore();
+        String announce = footBallGameAnnounce(teamA, null, scoreBoarder);
+        assertEquals("TeamA:Keep!!", announce);
     }
+
 
     @Test
     public void shouldReportTeamAWowAndTeamBAhhWhenTeamAGetScore() throws Exception {
-        Team teamA = new Team("A");
-        Team teamB = new Team("B");
-        FootballGame footballGame = new FootballGame(teamA, teamB);
         teamA.getScore();
-        String announce = footballGame.announce(new Reporter());
-        assertEquals("TeamA:Wow!,TeamB:Ahh!", announce);
+        String announce = footBallGameAnnounce(teamA, new Team("B"), reporter);
+        assertEquals("TeamA:Wow!TeamB:Ahh!", announce);
+    }
+
+    private String footBallGameAnnounce(Team teamA, Team TeamB, IAnnounceObserver announcer) {
+        FootballGame footballGame = new FootballGame(teamA, TeamB);
+        return footballGame.announce(announcer);
     }
 }
